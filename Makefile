@@ -1,7 +1,11 @@
-.SUFFIXES: .rs
+OBJS = cy.o librusty.a
+LIBS = -lm
 
-.rs.o:
-	rustc --emit obj $*.rs
+mixy: $(OBJS)
+	$(CC) $(CFLAGS) -o mixy $(OBJS) $(LIBS)
 
-mixy: rusty.o cy.o
-	$(CC) $(CFLAGS) -o mixy rusty.o cy.o
+librusty.a: rusty.rs
+	rustc $*.rs
+
+clean:
+	-rm -f mixy $(OBJS)
