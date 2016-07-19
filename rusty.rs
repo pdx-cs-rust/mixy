@@ -1,12 +1,20 @@
-#![feature(lang_items)]
-#![feature(start)]
-#![no_std]
-#![no_main]
+#![crate_type="staticlib"]
 
-#[no_mangle]
-pub extern "C" fn myfun() -> *const u8 {
-    "hello world\0".as_ptr()
+use std::result::Result;
+use std::ffi::{CString, NulError};
+
+extern "system" {
+    fn abort() -> !;
 }
 
-#[lang = "eh_personality"] extern fn eh_personality() {}
-#[lang = "panic_fmt"] extern fn panic_fmt() -> ! { loop {} }
+fn cunwrap(cstring: Result<CString, NulError>) -> CString {
+    match cstring {
+        Ok(s) => s,
+        _ => unsafe { abort() }
+    }
+}
+
+#[no_mangle]
+pub extern "system" fn myfun() -> *const i8 {
+    cunwrap(CString::new("hello world")).as_ptr()
+}
