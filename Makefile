@@ -1,5 +1,9 @@
 # Copyright © 2016 Bart Massey
-
+# 
+# [This program is licensed under the "MIT License"]
+# Please see the file COPYING in the source distribution of
+# this software for license terms.
+# 
 # Makefile for mixy: demonstration of calling
 # statically-linked rust from C.
 
