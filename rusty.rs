@@ -1,20 +1,9 @@
 #![crate_type="staticlib"]
 
-use std::result::Result;
-use std::ffi::{CString, NulError};
-
-extern "system" {
-    fn abort() -> !;
-}
-
-fn cunwrap(cstring: Result<CString, NulError>) -> CString {
-    match cstring {
-        Ok(s) => s,
-        _ => unsafe { abort() }
-    }
-}
+use std::ffi::CString;
+use std::os::raw::c_char;
 
 #[no_mangle]
-pub extern "system" fn myfun() -> *const i8 {
-    cunwrap(CString::new("hello world")).as_ptr()
+pub extern "system" fn myfun() -> *mut c_char {
+    CString::new("hello world").unwrap().into_raw()
 }
