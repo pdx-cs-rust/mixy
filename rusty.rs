@@ -18,7 +18,8 @@ use std::os::raw::c_char;
 /// storage.
 #[no_mangle]
 pub extern "system" fn gethello() -> *mut c_char {
-    CString::new("hello world").unwrap().into_raw()
+    let hello = "hello world".as_bytes().to_vec();
+    unsafe { CString::from_vec_unchecked(hello) }.into_raw()
 }
 
 /// Free the heap-allocated memory underlying a string
