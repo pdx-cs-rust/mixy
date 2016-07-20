@@ -1,4 +1,12 @@
+# Copyright © 2016 Bart Massey
+
+# Makefile for mixy: demonstration of calling
+# statically-linked rust from C.
+
 OBJS = cy.o librusty.a
+
+# These libraries were culled from the link info produced by
+# rustc when it compiles rusty.rs.
 LIBS = -ldl -lpthread -lm -lrt -lutil
 
 mixy: $(OBJS)
