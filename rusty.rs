@@ -8,25 +8,14 @@
 //! functions available to C.
 
 #![crate_type="staticlib"]
+#![feature(lang_items)]
+#![no_std]
+#![no_builtins]
 
-use std::ffi::CString;
-use std::os::raw::c_char;
-
-/// Returns a heap-allocated C string containing "hello
-/// world".  Because this is compiled as a staticlib crate,
-/// Rust will use the system malloc() to allocate the
-/// storage.
 #[no_mangle]
-pub extern "system" fn gethello() -> *mut c_char {
-    let hello = "hello world".as_bytes().to_vec();
-    unsafe { CString::from_vec_unchecked(hello) }.into_raw()
+pub extern "system" fn rust_add(a: i32, b: i32) -> i32 {
+    a + b
 }
 
-/// Free the heap-allocated memory underlying a string
-/// obtained from `gethello()`. Because this storage is
-/// allocated using the system malloc(), an ordinary free()
-/// will also work fine.
-#[no_mangle]
-pub extern "system" fn freehello(hello: *mut c_char) {
-    let _ = unsafe { CString::from_raw(hello) };
-}
+#[lang = "eh_personality"] extern fn eh_personality() {}
+#[lang = "panic_fmt"] #[no_mangle] pub fn panic_fmt() -> ! { loop {} }

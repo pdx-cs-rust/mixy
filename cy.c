@@ -12,17 +12,9 @@
 #include <stdlib.h>
 
 /* Rust externals. */
-extern char *gethello(void);
-extern void freehello(char *);
+extern int rust_add(int, int);
 
-/* This program should print the same string but different addresses.
-   When run with valgrind, it should show no leaks. */
 int main(void) {
-    char *s1 = gethello();
-    printf("%u: %s\n", (unsigned long) s1, s1);
-    char *s2 = gethello();
-    printf("%u: %s\n", (unsigned long) s2, s2);
-    freehello(s1);
-    free(s2);
+    printf("%d\n", rust_add(2, 3));
     return 0;
 }
