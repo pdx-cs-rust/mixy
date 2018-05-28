@@ -7,17 +7,16 @@
 # Makefile for mixy: demonstration of calling
 # statically-linked rust from C.
 
-OBJS = cy.o librusty.a
-
-# These libraries were culled from the link info produced by
-# rustc when it compiles rusty.rs.
-LIBS = -ldl -lpthread -lm -lrt -lutil
+OBJS = cy.o rusty.o
 
 mixy: $(OBJS)
 	$(CC) $(CFLAGS) -o mixy $(OBJS) $(LIBS)
 
-librusty.a: rusty.rs
-	rustc rusty.rs
+# XXX This will not currently work without -O, because
+# of a rustc bug / issue. See
+#   https://github.com/rust-lang-nursery/compiler-builtins/issues/79
+rusty.o: rusty.rs
+	rustc -O --emit=obj rusty.rs
 
 clean:
 	-rm -f mixy $(OBJS)
