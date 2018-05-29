@@ -12,9 +12,8 @@ OBJS = cy.o rusty.o
 mixy: $(OBJS)
 	$(CC) $(CFLAGS) -o mixy $(OBJS) $(LIBS)
 
-# XXX This will not currently work without -O, because
-# of a rustc bug / issue. See
-#   https://github.com/rust-lang-nursery/compiler-builtins/issues/79
+# XXX This will not currently work without -O.
+#   https://github.com/rust-lang-nursery/compiler-builtins/issues/245
 rusty.o: rusty.rs
 	rustc -O --emit=obj rusty.rs
 
