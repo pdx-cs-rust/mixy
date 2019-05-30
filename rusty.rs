@@ -5,15 +5,20 @@
 //! of this software for license terms.
 //!
 //! Demonstrate making statically-linked rust
-//! functions available to C.
+//! functions available to C and vice-versa.
 
 #![crate_type="staticlib"]
 #![no_std]
 #![no_builtins]
 
+extern {
+    fn c_mul(x: i32, y: i32) -> i32;
+}
+
 #[no_mangle]
 pub extern "system" fn rust_add(a: i32, b: i32) -> i32 {
-    a + b
+    let z = a + b;
+    unsafe { c_mul(z, z) }
 }
 
 #[panic_handler]

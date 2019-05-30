@@ -6,13 +6,17 @@
  */
 
 
-/* Demonstrate calling statically-linked Rust from C. */
+/* Demonstrate calling statically-linked Rust from C and vice-versa. */
 
 #include <stdio.h>
 #include <stdlib.h>
 
 /* Rust externals. */
 extern int rust_add(int, int);
+
+int c_mul(int x, int y) {
+    return x * y;
+}
 
 int main(void) {
     printf("%d\n", rust_add(2, 3));
