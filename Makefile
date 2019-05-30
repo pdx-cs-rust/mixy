@@ -15,7 +15,7 @@ mixy: $(OBJS)
 # XXX This will not currently work without -O.
 #   https://github.com/rust-lang-nursery/compiler-builtins/issues/245
 rusty.o: rusty.rs
-	rustc -O --emit=obj rusty.rs
+	rustc -O --emit=obj -C panic="abort" rusty.rs
 
 clean:
 	-rm -f mixy $(OBJS)

@@ -8,7 +8,6 @@
 //! functions available to C.
 
 #![crate_type="staticlib"]
-#![feature(lang_items)]
 #![no_std]
 #![no_builtins]
 
@@ -17,5 +16,8 @@ pub extern "system" fn rust_add(a: i32, b: i32) -> i32 {
     a + b
 }
 
-#[lang = "eh_personality"] extern fn eh_personality() {}
-#[lang = "panic_fmt"] #[no_mangle] pub fn panic_fmt() -> ! { loop {} }
+#[panic_handler]
+#[no_mangle]
+pub fn panic_handler(_info: &core::panic::PanicInfo) -> ! {
+    loop {}
+}
