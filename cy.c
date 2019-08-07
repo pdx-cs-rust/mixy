@@ -10,11 +10,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 
 /* Rust externals. */
-extern int rust_add(int, int);
+extern int32_t rust_add(int32_t, int32_t);
 
-int c_mul(int x, int y) {
+int32_t c_mul(int32_t x, int32_t y) {
     return x * y;
 }
 
