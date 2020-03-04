@@ -7,6 +7,10 @@
 # Makefile for mixy: demonstration of calling
 # statically-linked rust from C.
 
+CC = clang
+CFLAGS = -O3
+
+
 OBJS = cy.o rusty.o
 
 mixy: $(OBJS)
@@ -15,7 +19,7 @@ mixy: $(OBJS)
 # XXX This will not currently work without -O.
 #   https://github.com/rust-lang-nursery/compiler-builtins/issues/245
 rusty.o: rusty.rs
-	rustc -O --emit=obj -C panic="abort" rusty.rs
+	rustc -C opt-level=3 --emit=obj -C panic="abort" rusty.rs
 
 clean:
 	-rm -f mixy $(OBJS)
