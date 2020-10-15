@@ -10,16 +10,21 @@
 CC = clang
 CFLAGS = -O3
 
+# Optimized
+RUSTC = rustc --emit=obj -C opt-level=3 -C panic="abort"
+# Debug: See 
+#   https://github.com/rust-lang-nursery/compiler-builtins/issues/245
+# for a discussion of why debug-assertions must be turned off when
+# compiling for debugging.
+#RUSTC = rustc --emit=obj -C debug-assertions=off -C panic="abort"
 
 OBJS = cy.o rusty.o
 
 mixy: $(OBJS)
 	$(CC) $(CFLAGS) -o mixy $(OBJS) $(LIBS)
 
-# XXX This will not currently work without -O.
-#   https://github.com/rust-lang-nursery/compiler-builtins/issues/245
 rusty.o: rusty.rs
-	rustc -C opt-level=3 --emit=obj -C panic="abort" rusty.rs
+	$(RUSTC) rusty.rs
 
 clean:
 	-rm -f mixy $(OBJS)
