@@ -17,7 +17,7 @@ extern "C" {
 }
 
 #[no_mangle]
-pub extern "system" fn rust_add(a: i32, b: i32) -> i32 {
+pub extern "system" fn rust_add_squared(a: i32, b: i32) -> i32 {
     let z = a + b;
     unsafe { c_mul(z, z) }
 }
