@@ -11,7 +11,7 @@ CC = clang
 CFLAGS = -O3
 
 # Optimized
-RUSTC = rustc --emit=obj -C opt-level=3 -C panic="abort"
+RUSTC = rustc --crate-type=staticlib --emit=obj -C opt-level=3 -C panic="abort"
 # Debug: See 
 #   https://github.com/rust-lang-nursery/compiler-builtins/issues/245
 # for a discussion of why debug-assertions must be turned off when

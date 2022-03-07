@@ -7,7 +7,6 @@
 //! Demonstrate making statically-linked rust
 //! functions available to C and vice-versa.
 
-#![crate_type="staticlib"]
 #![no_std]
 #![no_builtins]
 
