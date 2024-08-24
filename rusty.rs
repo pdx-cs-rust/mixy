@@ -22,7 +22,6 @@ pub extern "system" fn rust_add_squared(a: i32, b: i32) -> i32 {
 }
 
 #[panic_handler]
-#[no_mangle]
 pub fn panic_handler(_info: &core::panic::PanicInfo) -> ! {
     unsafe { abort(); }
 }

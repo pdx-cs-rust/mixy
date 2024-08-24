@@ -7,24 +7,32 @@
 # Makefile for mixy: demonstration of calling
 # statically-linked rust from C.
 
-CC = clang
-CFLAGS = -O3
+
+RUSTFLAGS = --crate-type=staticlib --emit=obj -C lto=fat \
+  -C overflow-checks=true -C panic=abort
 
 # Optimized
-RUSTC = rustc --crate-type=staticlib --emit=obj -C opt-level=3 -C panic="abort"
-# Debug: See 
-#   https://github.com/rust-lang-nursery/compiler-builtins/issues/245
-# for a discussion of why debug-assertions must be turned off when
-# compiling for debugging.
-#RUSTC = rustc --emit=obj -C debug-assertions=off -C panic="abort"
+RUSTC = rustc -C opt-level=3
+CC = clang -O3
+
+# Debug
+#
+# NOTE: This is extremely fragile and sus. Requires lto=fat from above to
+# link. Requires opt-level=1 to link and get a reasonable-sized text
+# section.
+#
+#RUSTC = rustc -g -C opt-level=1
+#CC = clang -g
 
 OBJS = cy.o rusty.o
 
 mixy: $(OBJS)
 	$(CC) $(CFLAGS) -o mixy $(OBJS) $(LIBS)
 
-rusty.o: rusty.rs
-	$(RUSTC) rusty.rs
+rusty.o: Makefile rusty.rs
+	$(RUSTC) $(RUSTFLAGS) rusty.rs
+
+cy.o: Makefile
 
 clean:
 	-rm -f mixy $(OBJS)
