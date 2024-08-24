@@ -13,5 +13,5 @@ thus, this Rust code will not link if it contains any
 potential panics.
 
 This program is licensed under the "MIT License".  Please
-see the file `COPYING` in the source distribution of this
+see the file `LICENSE.txt` in the source distribution of this
 software for license terms.
