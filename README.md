@@ -7,8 +7,8 @@ including `main()`, the source file `rusty.rs` contains the
 Rust functions, and the `Makefile` does what you think it
 does. Please read all the things for more information.
 
-*Issue:* Right now `rustc` tries to call
-`core::panicking::panic()` even when `-C panic="abort"` —
+*Issue:* Right now `rustc` tries to call stuff from
+`core::panicking` even when `-C panic="abort"` —
 thus, this Rust code will not link if it contains any
 potential panics.
 
