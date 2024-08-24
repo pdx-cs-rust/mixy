@@ -12,8 +12,8 @@ RUSTFLAGS = --crate-type=staticlib --emit=obj -C lto=fat \
   -C overflow-checks=true -C panic=abort
 
 # Optimized
-RUSTC = rustc -C opt-level=3
-CC = clang -O3
+#RUSTC = rustc -C opt-level=3
+#CC = clang -O3
 
 # Debug
 #
@@ -21,8 +21,8 @@ CC = clang -O3
 # link. Requires opt-level=1 to link and get a reasonable-sized text
 # section.
 #
-#RUSTC = rustc -g -C opt-level=1
-#CC = clang -g
+RUSTC = rustc -g -C opt-level=1
+CC = clang -g
 
 OBJS = cy.o rusty.o
 
