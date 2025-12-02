@@ -9,7 +9,7 @@
 
 
 RUSTFLAGS = --crate-type=staticlib --emit=obj -C lto=fat \
-  -C overflow-checks=true -C panic=abort
+  -C overflow-checks=true -C panic=abort --edition=2024
 
 # Optimized
 #RUSTC = rustc -C opt-level=3

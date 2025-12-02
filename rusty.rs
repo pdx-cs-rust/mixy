@@ -10,14 +10,17 @@
 #![no_std]
 #![no_builtins]
 
-extern "C" {
+unsafe extern "C" {
     fn c_mul(x: i32, y: i32) -> i32;
     fn abort() -> !;
 }
 
-#[no_mangle]
-pub extern "system" fn rust_add_squared(a: i32, b: i32) -> i32 {
-    let z = a + b;
+#[unsafe(no_mangle)]
+pub extern "C" fn rust_add_squared(a: i32, b: i32) -> i32 {
+    let z = match i32::checked_add(a, b) {
+        Some(v) => v,
+        None => unsafe { abort() },
+    };
     unsafe { c_mul(z, z) }
 }
 
